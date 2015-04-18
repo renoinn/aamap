@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Content-Language" content="ja" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<title>日替わりおうちマップ</title>
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+	<!-- /bootstrap -->
+	<link href="/aamap/style.css" rel="stylesheet" type="text/css" media="screen, tv" />
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">日替わりおうちマップ</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">マップ<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+				<li><a href="/aamap/index.php?map=sunrise">サンライズ半島</a></li>
+				<li><a href="/aamap/index.php?map=mahadebi">マハデビ</a></li>
+				<li><a href="/aamap/index.php?map=songrand">ソングランド</a></li>
+				<li><a href="/aamap/index.php?map=kodainomori">古代の森</a></li>
+				<li><a href="/aamap/index.php?map=roka">ロカのチェス駒</a></li>
+				<li><a href="/aamap/index.php?map=howkhunt">ホークハント高原</a></li>
+				<li><a href="/aamap/index.php?map=tigerspine">タイガースパイン山脈</a></li>
+				<li><a href="/aamap/index.php?map=nijinohara">虹の原</a></li>
+				<li><a href="/aamap/index.php?map=inisutail">イニステール</a></li>
+				<li><a href="/aamap/index.php?map=grassrand">グラスランド</a></li>
+				<li><a href="/aamap/index.php?map=harihararaya">ハリハララヤ廃墟</a></li>
+				<li><a href="/aamap/index.php?map=hasura">ハスラ</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+	<?php if($no_map): ?>
+	<div class="alert alert-warning" role="alert">
+		<p>マップ選べハゲ</p>
+	</div>
+	<?php else: ?>
+	<div id="control" >
+		<div class="container">
+		<form>
+			<p>キャラ名<input type="text" name="name" />&nbsp;&nbsp;遠征隊開放してる？<input type="checkbox" name="isopen" value="true" />&nbsp;&nbsp;パスワード<input type="text" name="pass" />&nbsp;&nbsp;<a id="addHome" href="#">おうちを登録</a></p>
+		</form>
+		<p class="info">キャラ名を入力して、遠征隊に開放してたらチェックボックスをチェックして、「おうちを登録」押してからマップで自分ちの場所をクリック！パスワードはえらい人に聞け。</p>
+		</div>
+	</div>
+	<div class="container theme-showcase" role="main">
+		<div id="message">
+		  <div id="success" class="alert alert-success sr-only" role="alert">
+			登録してやったぞ喜べ！
+		  </div>
+		  <div id="error" class="alert alert-danger sr-only" role="alert">
+			失敗したぞハゲ！
+		  </div>
+		</div>
+		<div id="map">
+			<p><img class="<?php echo $map; ?>" src="/aamap/map_images/<?php echo $map; ?>.jpeg" /></p>
+			<div id="home-data">
+				<?php foreach($home_data as $item): ?>
+				<div class="home-item" data-name="<?php echo $item['name']; ?>" data-posX="<?php echo $item['posX']; ?>" data-posY="<?php echo $item['posY']; ?>">
+					<div class="pointor">
+						<img src="/aamap/images/facebook30.png" />
+					</div>
+					<div class="panel" style="display:none;">
+						<p><?php echo $item['name']; ?></p>
+						<p><?php if($item['isopen']): ?>開放中<?php else: ?>非公開<?php endif; ?></p>
+					</div>
+				</div>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</div>
+	<?php endif; ?>
+</body>
+</html>
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="/aamap/controller.js"></script>
+<script src="/aamap/view.js"></script>
